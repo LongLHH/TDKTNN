@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import IntroSection from '../components/IntroSection';
 import FlipCardSection from '../components/FlipCardSection';
 import ScratchCardsSection from '../components/ScratchCardsSection';
 import DragDropSection from '../components/DragDropSection';
@@ -7,14 +10,56 @@ import SummarySection from '../components/SummarySection';
 import Footer from '../components/Footer';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full">
-  <FlipCardSection />
-  <ScratchCardsSection />
-  <DragDropSection />
-  <ConnectingDotsSection />
-  <MindMapSection />
-  <SummarySection />
+    <div className="w-full relative">
+      {/* Floating Navigation Buttons */}
+      <motion.div 
+        className="fixed top-6 right-6 z-50 flex flex-col gap-3"
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+      >
+        <motion.button
+          onClick={() => navigate('/quiz')}
+          className="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl shadow-lg backdrop-blur-sm border border-purple-400/30 transition-all flex items-center gap-2"
+          whileHover={{ scale: 1.05, x: -5 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span>🎯</span>
+          <span>Tham gia Quiz</span>
+        </motion.button>
+        
+        <motion.button
+          onClick={() => navigate('/ai-report')}
+          className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg backdrop-blur-sm border border-indigo-400/30 transition-all flex items-center gap-2"
+          whileHover={{ scale: 1.05, x: -5 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span>🤖</span>
+          <span>AI Report</span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => navigate('/admin')}
+          className="px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl shadow-lg backdrop-blur-sm border border-orange-400/30 transition-all flex items-center gap-2"
+          whileHover={{ scale: 1.05, x: -5 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span>👨‍💼</span>
+          <span>Admin Panel</span>
+        </motion.button>
+      </motion.div>
+
+      {/* Existing Sections */}
+      <IntroSection />
+      <FlipCardSection />
+      <ScratchCardsSection />
+      <DragDropSection />
+      <ConnectingDotsSection />
+      <MindMapSection />
+      <SummarySection />
       <Footer />
     </div>
   );
