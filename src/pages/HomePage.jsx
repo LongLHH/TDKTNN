@@ -2,14 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import IntroSection from '../components/IntroSection';
 import TimelineSection from '../components/TimelineSection';
-import TwoWayRelationSection from '../components/TwoWayRelationSection';
 import SolutionSection from '../components/SolutionSection';
 import FlipCardSection from '../components/FlipCardSection';
 import ScratchCardsSection from '../components/ScratchCardsSection';
 import DragDropSection from '../components/DragDropSection';
 import ConnectingDotsSection from '../components/ConnectingDotsSection';
 import MindMapSection from '../components/MindMapSection';
-import SummarySection from '../components/SummarySection';
 import Footer from '../components/Footer';
 import TwoSideOfTDKTNN from '../components/TwoSideOfTDKTNN';
 
@@ -69,11 +67,6 @@ const HomePage = () => {
 
       <div className="relative">
         <TimelineSection />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-teal-800 pointer-events-none z-10" />
-      </div>
-
-      <div className="relative">
-        <TwoWayRelationSection />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />
       </div>
 
@@ -85,7 +78,6 @@ const HomePage = () => {
 
       <SolutionSection />
 
-      <SummarySection />
       <Footer />
     </div>
   );
