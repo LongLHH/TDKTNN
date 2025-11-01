@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 const TwoSideOfTDKTNN = () => {
     const [flippedCards, setFlippedCards] = useState([false, false, false, false]);
+    const [hoveredCard, setHoveredCard] = useState(null);
 
     const handleFlipCard = (index) => {
         setFlippedCards(prev => {
@@ -49,14 +50,27 @@ const TwoSideOfTDKTNN = () => {
 
                 <div className="flex space-x-4 flip-card h-[420px] w-full perspective-1000">
                     {/* thẻ 1 */}
-                    <div
-                        className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[0] ? 'transform rotate-y-180' : ''}`}
-                        style={{ transformStyle: 'preserve-3d' }}
-                        onClick={() => handleFlipCard(0)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(0)}
-                        role="button"
-                        tabIndex={0}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        animate={{ 
+                            scale: hoveredCard === null ? 1 : hoveredCard === 0 ? 1.05 : 0.95,
+                            opacity: hoveredCard === null ? 1 : hoveredCard === 0 ? 1 : 0.7
+                        }}
+                        className="relative w-full h-full"
+                        onMouseEnter={() => setHoveredCard(0)}
+                        onMouseLeave={() => setHoveredCard(null)}
                     >
+                        <div
+                            className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[0] ? 'transform rotate-y-180' : ''}`}
+                            style={{ transformStyle: 'preserve-3d' }}
+                            onClick={() => handleFlipCard(0)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(0)}
+                            role="button"
+                            tabIndex={0}
+                        >
                         {/* Front */}
                         <div className="flip-card-front absolute inset-0 backface-hidden border-2 border-vintage-accent rounded-2xl flex flex-col items-center justify-center p-6 transition-colors duration-700" style={{ backgroundColor: '#129c6eff' }}>
                             <div className="text-7xl mb-6">📊</div>
@@ -70,16 +84,30 @@ const TwoSideOfTDKTNN = () => {
                             <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">Hay... Méo mó tín hiệu thị trường ?</h2>
                             <p className="mt-4 text-gray-800">Việc can thiệp "giữ giá" làm cho giá cả không phản ánh đúng chi phí thực và cung - cầu, dẫn đến phân bổ nguồn lực kém hiệu quả và thiếu động lực tiết kiệm/đổi mới.</p>
                         </div>
-                    </div>
+                        </div>
+                    </motion.div>
                     {/* thẻ 2 */}
-                    <div
-                        className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[1] ? 'transform rotate-y-180' : ''}`}
-                        style={{ transformStyle: 'preserve-3d' }}
-                        onClick={() => handleFlipCard(1)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(1)}
-                        role="button"
-                        tabIndex={0}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        animate={{ 
+                            scale: hoveredCard === null ? 1 : hoveredCard === 1 ? 1.05 : 0.95,
+                            opacity: hoveredCard === null ? 1 : hoveredCard === 1 ? 1 : 0.7
+                        }}
+                        className="relative w-full h-full"
+                        onMouseEnter={() => setHoveredCard(1)}
+                        onMouseLeave={() => setHoveredCard(null)}
                     >
+                        <div
+                            className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[1] ? 'transform rotate-y-180' : ''}`}
+                            style={{ transformStyle: 'preserve-3d' }}
+                            onClick={() => handleFlipCard(1)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(1)}
+                            role="button"
+                            tabIndex={0}
+                        >
                         {/* Front */}
                         <div className="flip-card-front absolute inset-0 backface-hidden border-2 border-vintage-accent rounded-2xl flex flex-col items-center justify-center p-6 transition-colors duration-700" style={{ backgroundColor: '#129c6eff' }}>
                             <div className="text-7xl mb-6">🏘️</div>
@@ -90,19 +118,33 @@ const TwoSideOfTDKTNN = () => {
                         {/* Back */}
                         <div className="flip-card-back absolute inset-0 backface-hidden border-2 border-vintage-accent rounded-2xl flex flex-col items-center justify-center p-6 transition-colors duration-700" style={{ transform: 'rotateY(180deg)', backgroundColor: '#F08080' }}>
                             <div className="text-6xl mb-4">🔍</div>
-                            <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">Thiếu Minh bạch trong Chi phí</h2>
+                            <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">Hay... Thiếu Minh bạch trong Chi phí?</h2>
                             <p className="mt-4 text-gray-800">Chi phí thực hiện nhiệm vụ công ích thường bị trộn lẫn với chi phí kinh doanh thuần túy. Việc bù đắp chéo này gây khó khăn cho việc đánh giá hiệu quả kinh doanh thực tế, tạo kẽ hở cho sự kém hiệu quả hoặc thất thoát.</p>
                         </div>
-                    </div>
+                        </div>
+                    </motion.div>
                      {/* thẻ 3 */}
-                    <div
-                        className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[2] ? 'transform rotate-y-180' : ''}`}
-                        style={{ transformStyle: 'preserve-3d' }}
-                        onClick={() => handleFlipCard(2)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(2)}
-                        role="button"
-                        tabIndex={0}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                        animate={{ 
+                            scale: hoveredCard === null ? 1 : hoveredCard === 2 ? 1.05 : 0.95,
+                            opacity: hoveredCard === null ? 1 : hoveredCard === 2 ? 1 : 0.7
+                        }}
+                        className="relative w-full h-full"
+                        onMouseEnter={() => setHoveredCard(2)}
+                        onMouseLeave={() => setHoveredCard(null)}
                     >
+                        <div
+                            className={`flip-card-inner relative w-full h-full rounded-2xl transition-all duration-700 cursor-pointer ${flippedCards[2] ? 'transform rotate-y-180' : ''}`}
+                            style={{ transformStyle: 'preserve-3d' }}
+                            onClick={() => handleFlipCard(2)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleFlipCard(2)}
+                            role="button"
+                            tabIndex={0}
+                        >
                         {/* Front */}
                         <div className="flip-card-front absolute inset-0 backface-hidden border-2 border-vintage-accent rounded-2xl flex flex-col items-center justify-center p-6 transition-colors duration-700" style={{ backgroundColor: '#129c6eff' }}>
                             <div className="text-7xl mb-6">🚀</div>
@@ -116,7 +158,8 @@ const TwoSideOfTDKTNN = () => {
                             <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">Hay... Kém Hiệu quả và Cản trở cạnh tranh?</h2>
                             <p className="mt-4 text-gray-800">Thiếu áp lực cạnh tranh dẫn đến quản trị kém hiệu quả (bộ máy cồng kềnh, chi phí cao). Vốn đầu tư khổng lồ tạo ra một sân chơi không bình đẳng, khiến các doanh nghiệp tư nhân khác khó có thể chen chân vào.</p>
                         </div>
-                    </div>
+                        </div>
+                    </motion.div>
                     {/* thẻ 4 */}
                     {/* <div
                         className={`flip-card-inner relative w-full h-full rounded-2xl transition-transform duration-700 cursor-pointer ${flippedCards[3] ? 'transform rotate-y-180' : ''}`}
