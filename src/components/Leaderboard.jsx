@@ -131,7 +131,7 @@ const Leaderboard = ({ sessionId, isFinal = false }) => {
                     }`}>
                       {player.name}
                     </div>
-                    {isFinal && player.answers && (
+                    {isFinal && player.answers && player.answers.length > 0 && (
                       <div className={`text-sm ${
                         index === 0 ? 'text-yellow-400/80' : 'text-purple-300/70'
                       }`}>
