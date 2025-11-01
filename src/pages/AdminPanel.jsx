@@ -12,6 +12,8 @@ const AdminPanel = () => {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newSessionId, setNewSessionId] = useState('');
+  const [countdown, setCountdown] = useState(0);
+  const [isCountdownActive, setIsCountdownActive] = useState(false);
 
   // Load sessions và questions
   useEffect(() => {
@@ -36,6 +38,47 @@ const AdminPanel = () => {
 
     return () => unsubscribe();
   }, [selectedSession]);
+
+  // Listen to selected session changes để cập nhật trạng thái countdown
+  useEffect(() => {
+    if (!selectedSession) return;
+
+    const unsubscribe = onSnapshot(
+      doc(db, 'sessions', selectedSession.id),
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          const sessionData = docSnapshot.data();
+          setSelectedSession({ id: docSnapshot.id, ...sessionData });
+          
+          // Kiểm tra nếu session đang in-progress thì bật countdown
+          if (sessionData.status === 'in-progress' && !isCountdownActive) {
+            setCountdown(20);
+            setIsCountdownActive(true);
+          } else if (sessionData.status !== 'in-progress') {
+            setIsCountdownActive(false);
+          }
+        }
+      }
+    );
+
+    return () => unsubscribe();
+  }, [selectedSession?.id]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!isCountdownActive || countdown <= 0) return;
+
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          return 20; // Auto reset về 20s
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isCountdownActive, countdown]);
 
   const loadData = async () => {
     try {
@@ -92,6 +135,11 @@ const AdminPanel = () => {
         status: 'in-progress',
         currentQuestionIndex: 0
       });
+      
+      // Bắt đầu countdown
+      setCountdown(20);
+      setIsCountdownActive(true);
+      
       alert('✅ Quiz đã bắt đầu!');
       loadData();
     } catch (error) {
@@ -112,6 +160,10 @@ const AdminPanel = () => {
       await updateDoc(sessionRef, {
         currentQuestionIndex: nextIndex
       });
+      
+      // Reset countdown về 20s
+      setCountdown(20);
+      
       alert(`✅ Chuyển sang câu ${nextIndex + 1}!`);
       loadData();
     } catch (error) {
@@ -128,6 +180,11 @@ const AdminPanel = () => {
       await updateDoc(sessionRef, {
         status: 'completed'
       });
+      
+      // Tắt countdown
+      setIsCountdownActive(false);
+      setCountdown(0);
+      
       alert('✅ Quiz đã kết thúc!');
       loadData();
     } catch (error) {
@@ -228,7 +285,7 @@ const AdminPanel = () => {
                 sessions.map((session) => (
                   <motion.div
                     key={session.id}
-                    className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                    className={`p-4 rounded-xl border-2 transition-all cursor-pointer w-[98%] ${
                       selectedSession?.id === session.id
                         ? 'bg-purple-600/30 border-purple-400'
                         : 'bg-white/5 border-purple-700/40 hover:bg-white/10'
@@ -309,6 +366,35 @@ const AdminPanel = () => {
 
             {selectedSession ? (
               <div className="space-y-4">
+                {/* Countdown Timer */}
+                {isCountdownActive && selectedSession.status === 'in-progress' && (
+                  <motion.div 
+                    className="p-6 bg-gradient-to-r from-purple-600/30 to-blue-600/30 border border-purple-500/50 rounded-xl"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                  >
+                    <div className="text-center">
+                      <p className="text-purple-300 text-sm mb-2">⏱️ Thời gian còn lại:</p>
+                      <motion.div 
+                        className={`text-6xl font-bold ${countdown <= 5 ? 'text-red-400' : 'text-white'}`}
+                        animate={countdown <= 5 ? { scale: [1, 1.1, 1] } : {}}
+                        transition={{ duration: 0.5, repeat: countdown <= 5 ? Infinity : 0 }}
+                      >
+                        {countdown}s
+                      </motion.div>
+                      <div className="mt-4 w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                        <motion.div 
+                          className={`h-full ${countdown <= 5 ? 'bg-red-500' : 'bg-purple-500'}`}
+                          initial={{ width: '100%' }}
+                          animate={{ width: `${(countdown / 20) * 100}%` }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Session Info */}
                 <div className="p-4 bg-white/5 rounded-xl">
                   <h3 className="text-lg font-bold text-purple-300 mb-2">Thông tin:</h3>
