@@ -12,6 +12,7 @@ const QuizPage = () => {
   const [playerName, setPlayerName] = useState('');
   const [sessionId, setSessionId] = useState('');
   const [player, setPlayer] = useState(null);
+  const [playerId, setPlayerId] = useState(null);
   const [session, setSession] = useState(null);
   const [showQuiz, setShowQuiz] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -45,6 +46,25 @@ const QuizPage = () => {
     return () => unsubscribe();
   }, [sessionId, player]);
 
+  // Listen to player score changes realtime
+  useEffect(() => {
+    if (!sessionId || !playerId) return;
+
+    const playerRef = doc(db, 'sessions', sessionId, 'players', playerId);
+    const unsubscribe = onSnapshot(playerRef, (doc) => {
+      if (doc.exists()) {
+        const playerData = doc.data();
+        setPlayer(prevPlayer => ({
+          ...prevPlayer,
+          score: playerData.score || 0,
+          answers: playerData.answers || []
+        }));
+      }
+    });
+
+    return () => unsubscribe();
+  }, [sessionId, playerId]);
+
   const handleJoinSession = async (e) => {
     e.preventDefault();
     
@@ -76,6 +96,7 @@ const QuizPage = () => {
       };
 
       await setDoc(playerRef, playerData);
+      setPlayerId(playerId);
       setPlayer(playerData);
       
     } catch (error) {
@@ -213,7 +234,11 @@ const QuizPage = () => {
   if (showQuiz && !showResults) {
     return (
       <Quiz 
-        player={player} 
+        player={{
+          id: playerId,
+          name: player?.name || playerName,
+          score: 0
+        }}
         sessionId={sessionId} 
         onQuizComplete={handleQuizComplete}
       />
