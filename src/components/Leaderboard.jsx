@@ -7,8 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
  * Component hiển thị bảng xếp hạng
  * @param {string} sessionId - ID của session quiz
  * @param {boolean} isFinal - Có phải bảng xếp hạng cuối cùng không
+ * @param {object} currentPlayer - Thông tin người chơi hiện tại (optional)
  */
-const Leaderboard = ({ sessionId, isFinal = false }) => {
+const Leaderboard = ({ sessionId, isFinal = false, currentPlayer = null }) => {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -131,11 +132,11 @@ const Leaderboard = ({ sessionId, isFinal = false }) => {
                     }`}>
                       {player.name}
                     </div>
-                    {isFinal && player.answers && player.answers.length > 0 && (
+                    {isFinal && player.answeredQuestions && (
                       <div className={`text-sm ${
                         index === 0 ? 'text-yellow-400/80' : 'text-purple-300/70'
                       }`}>
-                        Đúng: {player.answers.filter(a => a.isCorrect).length}/{player.answers.length} câu
+                        Đã trả lời: {Object.keys(player.answeredQuestions).length} câu
                       </div>
                     )}
                   </div>
@@ -178,7 +179,11 @@ const Leaderboard = ({ sessionId, isFinal = false }) => {
               🎉 Chúc mừng {players[0].name}! 🎉
             </motion.h4>
             <p className="text-green-200 text-lg">
-              Bạn đã giành chiến thắng với <span className="font-bold text-green-300">{players[0].score}</span> điểm!
+              {currentPlayer && currentPlayer.id === players[0].id ? (
+                <>Bạn đã giành chiến thắng với <span className="font-bold text-green-300">{currentPlayer.score || 0}</span> điểm!</>
+              ) : (
+                <>{players[0].name} đã giành chiến thắng với <span className="font-bold text-green-300">{players[0].score || 0}</span> điểm!</>
+              )}
             </p>
           </div>
         </motion.div>

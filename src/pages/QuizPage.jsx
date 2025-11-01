@@ -274,7 +274,7 @@ const QuizPage = () => {
             </p>
           </motion.div>
 
-          <Leaderboard sessionId={sessionId} isFinal={true} />
+          <Leaderboard sessionId={sessionId} isFinal={true} currentPlayer={player} />
 
           <motion.button
             onClick={() => navigate('/')}
