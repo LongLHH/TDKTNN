@@ -20,9 +20,9 @@ const TwoSideOfTDKTNN = () => {
 
     return (
         <section
-            id="flipcard"
+            id="analysis"
             className="relative min-h-screen flex items-center justify-center px-6"
-            style={{ background: 'linear-gradient(135deg, #23170f 0%, #2a2722 50%, #3d352f 100%)' }}
+            style={{ background: `linear-gradient(to bottom, #047887 0%, #1e3a8a 50%, #581087 100%)` }}
         >
             <div className="absolute inset-0 opacity-10" style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.25'/%3E%3C/svg%3E")`
@@ -186,7 +186,7 @@ const TwoSideOfTDKTNN = () => {
                 <div className="mt-8">
                     <button
                         onClick={() => {
-                            const el = document.getElementById('scratchcards');
+                            const el = document.getElementById('solution');
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-amber-600 text-black font-semibold"

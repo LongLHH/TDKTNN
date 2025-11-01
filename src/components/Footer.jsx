@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import { navigationData } from '../data/content';
+import { useState, useRef } from 'react';
 
 const Footer = () => {
+  const [clickCount, setClickCount] = useState(0);
+  const clickTimeoutRef = useRef(null);
+
   const handleNavigation = (path) => {
     if (path.startsWith('#')) {
       const element = document.querySelector(path);
@@ -11,6 +15,27 @@ const Footer = () => {
     } else {
       window.location.href = path;
     }
+  };
+
+  const handleSecretClick = () => {
+    setClickCount(prev => prev + 1);
+
+    // Clear timeout cũ
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+
+    // Nếu đủ 5 lần click, navigate đến admin
+    if (clickCount + 1 >= 5) {
+      window.location.href = '/admin';
+      setClickCount(0);
+      return;
+    }
+
+    // Reset sau 2 giây nếu không click tiếp
+    clickTimeoutRef.current = setTimeout(() => {
+      setClickCount(0);
+    }, 2000);
   };
 
   return (
@@ -26,7 +51,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Navigation */}
         <div className="flex flex-wrap justify-center gap-6 mb-8">
-          {navigationData.map((item, index) => (
+          {navigationData.filter(item => item.path !== '/admin').map((item, index) => (
             <motion.button
               key={index}
               onClick={() => handleNavigation(item.path)}
@@ -65,21 +90,30 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-vintage-light/50 text-xs"
           >
-            Môn: Triết học Mác - Lênin | MLN122
+            Môn: Kinh tế chính trị Mác - Lênin | MLN122
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex justify-center gap-2 pt-4"
+            onClick={handleSecretClick}
+            className="flex justify-center gap-2 pt-4 cursor-pointer select-none"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                className="w-1.5 h-1.5 bg-vintage-accent/50 rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1],
+                  backgroundColor: i < clickCount ? '#d97706' : 'rgba(217, 119, 6, 0.5)'
+                }}
+                transition={{ 
+                  scale: { duration: 2, repeat: Infinity, delay: i * 0.2 },
+                  backgroundColor: { duration: 0.3 }
+                }}
+                className={`w-1.5 h-1.5 rounded-full ${i < clickCount ? 'bg-vintage-accent' : 'bg-vintage-accent/50'}`}
               />
             ))}
           </motion.div>

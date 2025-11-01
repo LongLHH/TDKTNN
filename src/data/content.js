@@ -292,6 +292,7 @@ export const finalSectionData = {
 export const navigationData = [
   { label: 'Trang chủ', path: '/', icon: '🏠' },
   { label: 'Tổng quan', path: '#intro', icon: '📖' },
-  { label: 'Dòng thời gian', path: '#timeline', icon: '⏳' },
-  { label: 'Phân tích', path: '#analysis', icon: '🔍' }
+  { label: 'Case Study', path: '#timeline', icon: '⏳' },
+  { label: 'Phân tích', path: '#analysis', icon: '🔍' },
+  { label: 'Giải pháp', path: '#solution', icon: '⚙️' }
 ];

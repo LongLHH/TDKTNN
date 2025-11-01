@@ -171,7 +171,7 @@ const SolutionSection = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 py-20 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 py-20 overflow-hidden" id='solution'>
       {/* Animated Background Elements with 3D depth */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

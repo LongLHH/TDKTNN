@@ -42,16 +42,6 @@ const HomePage = () => {
           <span>🤖</span>
           <span>AI Report</span>
         </motion.button>
-
-        <motion.button
-          onClick={() => navigate('/admin')}
-          className="px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl shadow-lg backdrop-blur-sm border border-orange-400/30 transition-all flex items-center gap-2"
-          whileHover={{ scale: 1.05, x: -5 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <span>👨‍💼</span>
-          <span>Admin Panel</span>
-        </motion.button>
       </motion.div>
 
       {/* Sections theo thứ tự logic với fade transitions */}
@@ -67,7 +57,7 @@ const HomePage = () => {
 
       <div className="relative">
         <TimelineSection />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-emerald-700 pointer-events-none z-10" />
       </div>
 
       {/* 2 mặt của TDKTNN */}

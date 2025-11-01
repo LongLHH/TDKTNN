@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { introData } from '../data/content';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { introData } from "../data/content";
 
 const IntroSection = () => {
-  const [displayedText, setDisplayedText] = useState('');
+  const [displayedText, setDisplayedText] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullText = introData.typewriterQuestion;
 
   useEffect(() => {
     if (!fullText) return;
-    
+
     let currentIndex = 0;
     const typingInterval = setInterval(() => {
       if (currentIndex <= fullText.length) {
@@ -25,21 +25,22 @@ const IntroSection = () => {
   }, [fullText]);
 
   const scrollToNext = () => {
-    const nextSection = document.getElementById('timeline');
+    const nextSection = document.getElementById("timeline");
     if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' });
+      nextSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section 
+    <section
+      id="intro"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
         background: `linear-gradient(to bottom, #0f172a 0%, #1e1b4b 100%)`,
       }}
     >
       {/* Parchment Texture Overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
@@ -109,7 +110,9 @@ const IntroSection = () => {
         onClick={scrollToNext}
       >
         <div className="flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-vintage-light/60 text-sm tracking-widest">SCROLL</span>
+          <span className="text-vintage-light/60 text-sm tracking-widest">
+            SCROLL
+          </span>
           <svg
             className="w-6 h-6 text-vintage-accent"
             fill="none"
@@ -126,8 +129,13 @@ const IntroSection = () => {
 
       <style jsx>{`
         @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
         }
         .animate-blink {
           animation: blink 1s infinite;
