@@ -87,7 +87,7 @@ const SolutionSection = () => {
       circles: [
         {
           id: 'owner',
-          title: 'Owner (Chủ sở hữu)',
+          title: 'Chủ sở hữu',
           icon: <FaCrown className="text-4xl" />,
           solution: 'Giao SCIC hoặc Ủy ban Quản lý vốn nhà nước quản lý vốn; đặt KPI lợi nhuận và bảo toàn vốn.',
           color: 'purple-500',
@@ -95,7 +95,7 @@ const SolutionSection = () => {
         },
         {
           id: 'regulator',
-          title: 'Regulator (Quản lý)',
+          title: 'Quản lý',
           icon: <MdGavel className="text-4xl" />,
           solution: 'Bộ ngành chỉ ban hành luật chơi, không can thiệp kinh doanh.',
           color: 'violet-600',
@@ -103,7 +103,7 @@ const SolutionSection = () => {
         },
         {
           id: 'executor',
-          title: 'Policy Executor (Thực thi)',
+          title: 'Thực thi chính sách',
           icon: <HiLightningBolt className="text-4xl" />,
           solution: 'Nhà nước đặt hàng và chi trả riêng cho nhiệm vụ xã hội.',
           color: 'indigo-700',
@@ -907,9 +907,9 @@ const SolutionSection = () => {
                       <text x="300" y="310" textAnchor="middle" fontSize="40">⚡</text>
                       
                       {/* Labels */}
-                      <text x="200" y="225" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Owner</text>
-                      <text x="400" y="225" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Regulator</text>
-                      <text x="300" y="345" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Executor</text>
+                      <text x="200" y="225" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Chủ sở hữu</text>
+                      <text x="400" y="225" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Quản lý</text>
+                      <text x="300" y="345" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">Điều hành</text>
                     </svg>
                   </div>
 
