@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import IntroSection from '../components/IntroSection';
+import TimelineSection from '../components/TimelineSection';
+import TwoWayRelationSection from '../components/TwoWayRelationSection';
 import FlipCardSection from '../components/FlipCardSection';
 import ScratchCardsSection from '../components/ScratchCardsSection';
 import DragDropSection from '../components/DragDropSection';
@@ -52,13 +54,27 @@ const HomePage = () => {
         </motion.button>
       </motion.div>
 
-      {/* Existing Sections */}
-      <IntroSection />
-      <FlipCardSection />
-      <ScratchCardsSection />
-      <DragDropSection />
-      <ConnectingDotsSection />
-      <MindMapSection />
+      {/* Sections theo thứ tự logic với fade transitions */}
+      <div className="relative">
+        <IntroSection />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />
+      </div>
+
+      <div className="relative">
+        <DragDropSection />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-indigo-900 pointer-events-none z-10" />
+      </div>
+
+      <div className="relative">
+        <TimelineSection />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-teal-800 pointer-events-none z-10" />
+      </div>
+
+      <div className="relative">
+        <TwoWayRelationSection />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-emerald-700 pointer-events-none z-10" />
+      </div>
+
       <SummarySection />
       <Footer />
     </div>

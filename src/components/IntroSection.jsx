@@ -35,7 +35,7 @@ const IntroSection = () => {
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        background: `linear-gradient(135deg, #23170f 0%, #2a2722 50%, #3d352f 100%)`,
+        background: `linear-gradient(to bottom, #0f172a 0%, #1e1b4b 100%)`,
       }}
     >
       {/* Parchment Texture Overlay */}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#7c3aed"/>
+  <ellipse cx="100" cy="80" rx="50" ry="30" fill="#a78bfa" transform="rotate(-30 100 80)"/>
+  <ellipse cx="100" cy="80" rx="50" ry="30" fill="#8b5cf6" transform="rotate(30 100 80)"/>
+  <circle cx="100" cy="80" r="15" fill="#6d28d9"/>
+  <text x="100" y="140" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#e0e7ff" text-anchor="middle">VNPT</text>
+  <text x="100" y="165" font-family="Arial, sans-serif" font-size="12" fill="#c4b5fd" text-anchor="middle">VIỄN THÔNG</text>
+</svg>

@@ -3,7 +3,9 @@ import { conceptAData, conceptBData, exampleData } from '../data/content';
 
 const TwoWayRelationSection = () => {
   return (
-    <section id="analysis" className="relative min-h-screen bg-vintage-darker py-20 px-6">
+    <section id="analysis" className="relative min-h-screen py-20 px-6" style={{
+      background: `linear-gradient(to bottom, #0f766e 0%, #059669 50%, #10b981 100%)`
+    }}>
       {/* Section Title */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -11,11 +13,11 @@ const TwoWayRelationSection = () => {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-vintage-accent mb-4">
-          Mối Quan Hệ Tương Tác
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          🔍 So sánh: Lý thuyết vs Thực tiễn
         </h2>
-        <p className="text-lg text-vintage-light/70 max-w-3xl mx-auto">
-          Phân tích mối quan hệ hai chiều và tác động qua lại
+        <p className="text-lg text-emerald-100/80 max-w-3xl mx-auto">
+          Phân tích mối quan hệ giữa lý thuyết kinh tế học và thực tế Việt Nam
         </p>
       </motion.div>
 
