@@ -45,6 +45,24 @@ const Quiz = ({ player, sessionId, onQuizComplete }) => {
     };
   }, [sessionId, onQuizComplete]);
 
+  // Listen to player score changes để cập nhật điểm realtime
+  const [currentScore, setCurrentScore] = useState(player.score || 0);
+  
+  useEffect(() => {
+    let unsubscribe;
+    const playerRef = doc(db, 'sessions', sessionId, 'players', player.id);
+    unsubscribe = onSnapshot(playerRef, (doc) => {
+      if (doc.exists()) {
+        const playerData = doc.data();
+        setCurrentScore(playerData.score || 0);
+      }
+    });
+
+    return () => {
+      unsubscribe?.();
+    };
+  }, [sessionId, player.id]);
+
   // Load câu hỏi hiện tại khi session hoặc questions thay đổi
   useEffect(() => {
     if (session && questions.length > 0 && session.currentQuestionIndex !== undefined) {
@@ -102,7 +120,7 @@ const Quiz = ({ player, sessionId, onQuizComplete }) => {
     return () => clearInterval(timer);
   }, [answerStartTime, hasAnswered]);
 
-  // Submit câu trả lời
+  // Submit câu trả lời và cộng điểm ngay lập tức
   const submitAnswer = useCallback(async (answer, timeTaken = null) => {
     if (hasAnswered) return;
 
@@ -120,8 +138,10 @@ const Quiz = ({ player, sessionId, onQuizComplete }) => {
     try {
       setHasAnswered(true);
       
+      // Cộng điểm ngay khi submit (không đợi hết thời gian)
       const playerRef = doc(db, 'sessions', sessionId, 'players', player.id);
       await updateDoc(playerRef, {
+        score: increment(score),
         [`answeredQuestions.${session.currentQuestionIndex}`]: true,
         answers: increment(0)
       });
@@ -160,23 +180,17 @@ const Quiz = ({ player, sessionId, onQuizComplete }) => {
     }
   }, [hasAnswered, showResult, timeRemaining, currentQuestion, session, sessionId, player.id]);
 
-  // Cộng điểm và hiện kết quả cho người đã submit trước đó
+  // Chỉ hiện kết quả (không cộng điểm nữa vì đã cộng khi submit)
   const awardScoreAndShowResult = useCallback(async () => {
     if (showResult) return;
 
     try {
       setShowResult(true);
-      
-      if (currentAnswerResult) {
-        const playerRef = doc(db, 'sessions', sessionId, 'players', player.id);
-        await updateDoc(playerRef, {
-          score: increment(currentAnswerResult.score)
-        });
-      }
+      // Không cần cộng điểm nữa vì đã cộng ở submitAnswer
     } catch (error) {
-      console.error('Error awarding score:', error);
+      console.error('Error showing result:', error);
     }
-  }, [showResult, sessionId, player.id, currentAnswerResult]);
+  }, [showResult]);
 
   const handleAnswerSubmit = (e) => {
     e.preventDefault();
@@ -259,9 +273,15 @@ const Quiz = ({ player, sessionId, onQuizComplete }) => {
             >
               {formatTimeRemaining(timeRemaining)}
             </motion.div>
-            <div className="text-purple-200 font-medium">
-              💰 Điểm: <span className="text-purple-400 font-bold">{player.score}</span>
-            </div>
+            <motion.div 
+              className="text-purple-200 font-medium"
+              key={currentScore}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 0.3 }}
+            >
+              💰 Điểm: <span className="text-yellow-400 font-bold text-xl">{currentScore}</span>
+            </motion.div>
           </div>
         </motion.div>
 
