@@ -3,7 +3,9 @@ import { summaryData, significanceData, finalSectionData } from '../data/content
 
 const SummarySection = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-vintage-dark to-vintage-darker py-20 px-6">
+    <section className="relative min-h-screen py-20 px-6" style={{
+      background: `linear-gradient(to bottom, #10b981 0%, #059669 50%, #047857 100%)`
+    }}>
       {/* Background Decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{

@@ -1,94 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
-import { db } from '../firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AIReportPage = () => {
   const navigate = useNavigate();
-  const [aiUsageData, setAiUsageData] = useState([]);
-  const [stats, setStats] = useState({
-    totalSessions: 0,
-    totalPlayers: 0,
-    averageScore: 0,
-    topScore: 0
-  });
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview'); // overview, sessions, analytics
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('tools'); // tools, evidence, application, integrity
 
-  useEffect(() => {
-    loadAIUsageData();
-  }, []);
 
-  const loadAIUsageData = async () => {
-    try {
-      // Load sessions data
-      const sessionsQuery = query(
-        collection(db, 'sessions'),
-        orderBy('createdAt', 'desc'),
-        limit(20)
-      );
-      const sessionsSnapshot = await getDocs(sessionsQuery);
-      
-      let totalPlayers = 0;
-      let totalScore = 0;
-      let maxScore = 0;
-      const sessionsData = [];
 
-      for (const sessionDoc of sessionsSnapshot.docs) {
-        const sessionData = { id: sessionDoc.id, ...sessionDoc.data() };
-        
-        // Load players for each session
-        const playersSnapshot = await getDocs(
-          collection(db, 'sessions', sessionDoc.id, 'players')
-        );
-        
-        const players = [];
-        playersSnapshot.forEach(playerDoc => {
-          const playerData = playerDoc.data();
-          players.push(playerData);
-          totalPlayers++;
-          totalScore += playerData.score || 0;
-          if (playerData.score > maxScore) {
-            maxScore = playerData.score;
-          }
-        });
-
-        sessionData.players = players;
-        sessionsData.push(sessionData);
-      }
-
-      setAiUsageData(sessionsData);
-      setStats({
-        totalSessions: sessionsSnapshot.size,
-        totalPlayers,
-        averageScore: totalPlayers > 0 ? Math.round(totalScore / totalPlayers) : 0,
-        topScore: maxScore
-      });
-      setLoading(false);
-    } catch (error) {
-      console.error('Error loading AI usage data:', error);
-      setLoading(false);
+  const aiTools = [
+    {
+      name: 'GitHub Copilot',
+      purpose: 'Cải thiện UI/UX và animation',
+      prompts: [
+        'Cải thiện component React hiệu quả với animations mượt mà, tối ưu responsive design và enhanced user experience cho ứng dụng',
+        'Tạo card layout cho timeline với animations và enhanced visual effects'
+      ],
+      outputs: [
+        'Suggestions for advanced animations, improved responsive layouts, enhanced visual effects and performance optimizations',
+        'Timeline cards với animations và responsive design'
+      ],
+      edits: [
+        'Áp dụng selective các đề xuất giữ lọp, tùy chỉnh animations timing, điều chỉnh breakpoints và tối ưu performance',
+        'Customize layout, thêm gradient backgrounds, điều chỉnh spacing'
+      ]
+    },
+    {
+      name: 'Gemini Gem và NotebookLM',
+      purpose: 'Tổng hợp, tư vấn nội dung và cấu trúc',
+      prompts: [
+        'Phân tích và tổng hợp các khái niệm độc quyền từ Marx-Lenin, đưa ra cấu trúc tổng quát để phân tích hai logic và tạo nội dung phân tích với sinh viên Việt Nam',
+        'Tạo nội dung về độc quyền tự nhiên và độc quyền chỉ định từ các nguồn học thuật'
+      ],
+      outputs: [
+        'Structured content về các khái niệm độc quyền cơ bản, theories lịch sử, các khái niệm liên đới kèm hệ thống categories và được giải thích dễ hiểu và mind maps tổng hợp',
+        'Chi tiết nội dung độc quyền từ nhiều góc nhìn với structured output'
+      ],
+      edits: [
+        'Điều chỉnh nội dung theo học sinh, bổ sung ví dụ từ thị trường Việt Nam, tối ưu cấu trúc, thêm tin cho web interface',
+        'Chọn lọc nội dung phù hợp, đơn giản hóa thuật ngữ, thêm context Việt Nam'
+      ]
+    },
+    {
+      name: 'Gemini Nano Banana',
+      purpose: 'Tạo hình ảnh minh họa',
+      prompts: [
+        'Create vintage-style illustrations for Marx-Lenin economic theory timeline',
+        'Generate company logos for Vietnamese State Economic Groups (EVN, PVN, VNPT)'
+      ],
+      outputs: [
+        'Các hình ảnh timeline và timeline theo style cổ điển',
+        'Company logos theo phong cách hiện đại minimalist'
+      ],
+      edits: [
+        'Chỉnh màu sắc, kích thước cho phù hợp với theme web',
+        'Export sang SVG format, tối ưu kích thước file'
+      ]
     }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
-        <motion.div 
-          className="text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <div className="animate-spin rounded-full h-12 w-12 border-2 border-purple-400 border-t-transparent mx-auto mb-4"></div>
-          <p className="text-purple-300 text-lg">Đang tải dữ liệu AI...</p>
-        </motion.div>
-      </div>
-    );
-  }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-amber-950 via-stone-900 to-neutral-950 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
@@ -96,106 +69,110 @@ const AIReportPage = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-            <div>
-              <h1 className="text-4xl font-bold text-white mb-2">🤖 AI Usage Report</h1>
-              <p className="text-purple-300">Theo dõi và phân tích sử dụng hệ thống Quiz AI</p>
-            </div>
+          <div className="flex flex-col items-center text-center mb-8">
             <button
               onClick={() => navigate('/')}
-              className="mt-4 md:mt-0 px-6 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-purple-500/30 rounded-xl text-purple-100 transition-all"
+              className="self-end mb-4 px-4 py-2 bg-amber-900/50 hover:bg-amber-800/50 backdrop-blur-sm border border-amber-700/30 rounded-xl text-amber-100 transition-all text-sm"
             >
-              ← Quay lại
+              ← Quay lại trang chủ
             </button>
+            <h1 className="text-5xl md:text-6xl font-bold text-amber-100 mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+              Báo cáo Sử dụng AI
+            </h1>
+            <p className="text-xl text-amber-300" style={{ fontFamily: 'Georgia, serif' }}>
+              Cam kết Liêm chính Học thuật
+            </p>
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex space-x-2 bg-white/10 backdrop-blur-sm border border-purple-500/30 rounded-xl p-2">
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
             {[
-              { id: 'overview', label: '📊 Tổng quan', icon: '📊' },
-              { id: 'sessions', label: '🎮 Sessions', icon: '🎮' },
-              { id: 'analytics', label: '📈 Phân tích', icon: '📈' }
+              { id: 'tools', label: '🤖 Công cụ AI đã sử dụng', icon: '🤖' },
+              { id: 'evidence', label: '� Kiểm chứng nguồn', icon: '�' },
+              { id: 'application', label: '� Ứng dụng AI sáng tạo', icon: '�' },
+              { id: 'integrity', label: '� Cam kết liêm chính', icon: '�' }
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all ${
+                className={`px-5 py-3 rounded-xl font-medium transition-all ${
                   activeTab === tab.id
-                    ? 'bg-purple-600 text-white shadow-lg'
-                    : 'text-purple-300 hover:text-white hover:bg-white/10'
+                    ? 'bg-amber-700 text-white shadow-xl border border-amber-500'
+                    : 'bg-amber-900/30 text-amber-200 hover:text-white hover:bg-amber-900/50 border border-amber-800/30'
                 }`}
               >
-                {tab.icon} {tab.label}
+                <span className="text-lg">{tab.icon}</span>
+                <span className="ml-2 hidden md:inline">{tab.label.replace(/^.+?\s/, '')}</span>
+                <span className="ml-2 md:hidden">{tab.label.split(' ')[1]}</span>
               </button>
             ))}
           </div>
         </motion.div>
 
         <AnimatePresence mode="wait">
-          {/* Overview Tab */}
-          {activeTab === 'overview' && (
+          {/* Tools Tab */}
+          {activeTab === 'tools' && (
             <motion.div
-              key="overview"
+              key="tools"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                  { label: 'Tổng Sessions', value: stats.totalSessions, icon: '🎯', color: 'from-blue-600 to-cyan-600' },
-                  { label: 'Tổng Người chơi', value: stats.totalPlayers, icon: '👥', color: 'from-purple-600 to-pink-600' },
-                  { label: 'Điểm TB', value: stats.averageScore, icon: '📊', color: 'from-green-600 to-emerald-600' },
-                  { label: 'Điểm cao nhất', value: stats.topScore, icon: '🏆', color: 'from-yellow-600 to-orange-600' }
-                ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-xl`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className="text-4xl mb-2">{stat.icon}</div>
-                    <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                    <div className="text-sm opacity-90">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Recent Activity */}
               <motion.div 
-                className="bg-white/10 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6"
+                className="bg-amber-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
               >
-                <h2 className="text-2xl font-bold text-white mb-4">📋 Hoạt động gần đây</h2>
-                <div className="space-y-3">
-                  {aiUsageData.slice(0, 5).map((session, index) => (
+                <h2 className="text-3xl font-bold text-amber-100 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                  🤖 Công cụ AI đã sử dụng
+                </h2>
+                
+                <div className="space-y-8">
+                  {aiTools.map((tool, index) => (
                     <motion.div
-                      key={session.id}
-                      className="flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all"
+                      key={tool.name}
+                      className="bg-stone-900/60 border border-amber-800/30 rounded-xl p-6"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
+                      transition={{ delay: index * 0.15 }}
+                      whileHover={{ scale: 1.01, borderColor: 'rgba(217, 119, 6, 0.5)' }}
                     >
-                      <div className="flex items-center space-x-4">
-                        <div className="text-2xl">
-                          {session.status === 'completed' ? '✅' : session.status === 'in-progress' ? '⏳' : '⏸️'}
+                      <h3 className="text-2xl font-bold text-amber-200 mb-3">{tool.name}</h3>
+                      <p className="text-amber-400 italic mb-4">Mục đích: {tool.purpose}</p>
+                      
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <div className="bg-amber-950/40 p-4 rounded-lg">
+                          <h4 className="text-amber-300 font-semibold mb-2">Prompt chính:</h4>
+                          <ul className="space-y-2">
+                            {tool.prompts.map((prompt, i) => (
+                              <li key={i} className="text-amber-100/80 text-sm leading-relaxed">
+                                {prompt}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <div>
-                          <div className="font-medium text-white">Session {session.id.slice(-8)}</div>
-                          <div className="text-sm text-purple-300">
-                            {session.players?.length || 0} người chơi
-                          </div>
+                        
+                        <div className="bg-amber-950/40 p-4 rounded-lg">
+                          <h4 className="text-amber-300 font-semibold mb-2">Output từ AI:</h4>
+                          <ul className="space-y-2">
+                            {tool.outputs.map((output, i) => (
+                              <li key={i} className="text-amber-100/80 text-sm leading-relaxed">
+                                {output}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-purple-300">
-                          {session.status === 'completed' ? 'Hoàn thành' : 
-                           session.status === 'in-progress' ? 'Đang chơi' : 'Đang chờ'}
+                        
+                        <div className="bg-amber-950/40 p-4 rounded-lg">
+                          <h4 className="text-amber-300 font-semibold mb-2">Chỉnh sửa của nhóm:</h4>
+                          <ul className="space-y-2">
+                            {tool.edits.map((edit, i) => (
+                              <li key={i} className="text-amber-100/80 text-sm leading-relaxed">
+                                {edit}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
                     </motion.div>
@@ -205,67 +182,64 @@ const AIReportPage = () => {
             </motion.div>
           )}
 
-          {/* Sessions Tab */}
-          {activeTab === 'sessions' && (
+          {/* Evidence Tab */}
+          {activeTab === 'evidence' && (
             <motion.div
-              key="sessions"
+              key="evidence"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
               <motion.div 
-                className="bg-white/10 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6"
+                className="bg-amber-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-2xl font-bold text-white mb-4">🎮 Danh sách Sessions</h2>
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  🔍 Kiểm chứng nguồn
+                </h2>
+                <p className="text-amber-200 mb-6">
+                  Tất cả thông tin về Tập đoàn Kinh tế Nhà nước đều được cross-reference từ nhiều nguồn học thuật đáng tin cậy
+                </p>
+                
                 <div className="space-y-4">
-                  {aiUsageData.map((session, index) => (
+                  {[
+                    {
+                      title: 'Lý thuyết Độc quyền',
+                      sources: ['Tư bản - Karl Marx', 'Giáo trình Kinh tế Chính trị Mác-Lênin', 'Nghiên cứu về Kinh tế Việt Nam'],
+                      verified: true
+                    },
+                    {
+                      title: 'Dữ liệu về EVN, PVN, VNPT',
+                      sources: ['Website chính thức các tập đoàn', 'Báo cáo thường niên', 'Nghị quyết Chính phủ'],
+                      verified: true
+                    },
+                    {
+                      title: 'Phân tích Độc quyền trong thực tiễn Việt Nam',
+                      sources: ['Báo cáo Ngân hàng Thế giới', 'Nghiên cứu VEPR', 'Tạp chí Kinh tế & Phát triển'],
+                      verified: true
+                    }
+                  ].map((item, index) => (
                     <motion.div
-                      key={session.id}
-                      className="p-6 bg-white/5 rounded-xl hover:bg-white/10 transition-all"
+                      key={index}
+                      className="bg-stone-900/60 border border-amber-800/30 rounded-xl p-5"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold text-white mb-1">
-                            Session {session.id.slice(-8)}
-                          </h3>
-                          <p className="text-purple-300">
-                            {session.players?.length || 0} người chơi • {session.status || 'N/A'}
-                          </p>
-                        </div>
-                        <div className={`px-4 py-2 rounded-lg font-medium mt-2 md:mt-0 ${
-                          session.status === 'completed' ? 'bg-green-600/30 text-green-300' :
-                          session.status === 'in-progress' ? 'bg-blue-600/30 text-blue-300' :
-                          'bg-gray-600/30 text-gray-300'
-                        }`}>
-                          {session.status === 'completed' ? '✅ Hoàn thành' :
-                           session.status === 'in-progress' ? '⏳ Đang chơi' :
-                           '⏸️ Đang chờ'}
-                        </div>
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-xl font-semibold text-amber-200">{item.title}</h3>
+                        {item.verified && (
+                          <span className="bg-green-600/30 text-green-300 px-3 py-1 rounded-full text-xs font-medium">
+                            ✓ Đã xác minh
+                          </span>
+                        )}
                       </div>
-                      
-                      {/* Players list */}
-                      {session.players && session.players.length > 0 && (
-                        <div className="mt-4 space-y-2">
-                          <h4 className="text-sm font-medium text-purple-300">Người chơi:</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {session.players.slice(0, 6).map((player, pidx) => (
-                              <div key={pidx} className="flex items-center justify-between p-2 bg-white/5 rounded">
-                                <span className="text-white">{player.name}</span>
-                                <span className="text-purple-300 font-medium">{player.score || 0} điểm</span>
-                              </div>
-                            ))}
-                          </div>
-                          {session.players.length > 6 && (
-                            <p className="text-sm text-purple-400">+ {session.players.length - 6} người khác...</p>
-                          )}
-                        </div>
-                      )}
+                      <div className="text-sm text-amber-100/70">
+                        <span className="font-medium">Nguồn tham khảo: </span>
+                        {item.sources.join(' • ')}
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -273,59 +247,116 @@ const AIReportPage = () => {
             </motion.div>
           )}
 
-          {/* Analytics Tab */}
-          {activeTab === 'analytics' && (
+          {/* Application Tab */}
+          {activeTab === 'application' && (
             <motion.div
-              key="analytics"
+              key="application"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
               <motion.div 
-                className="bg-white/10 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6"
+                className="bg-amber-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-2xl font-bold text-white mb-6">📈 Phân tích chi tiết</h2>
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  🎯 Ứng dụng AI sáng tạo
+                </h2>
+                <p className="text-amber-200 mb-6">
+                  AI được sử dụng như công cụ hỗ trợ, không thay thế tư duy phản biện và sáng tạo của nhóm
+                </p>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    {
+                      icon: '💡',
+                      title: 'Brainstorming & Cấu trúc',
+                      desc: 'AI giúp tổ chức ý tưởng ban đầu, đề xuất framework phân tích. Nhóm quyết định góc nhìn, logic trình bày và nội dung chính'
+                    },
+                    {
+                      icon: '🎨',
+                      title: 'Thiết kế UI/UX',
+                      desc: 'AI đề xuất layout và animations. Nhóm tùy chỉnh color scheme, typography, spacing để phù hợp với đề tài'
+                    },
+                    {
+                      icon: '📝',
+                      title: 'Viết nội dung',
+                      desc: 'AI cung cấp draft ban đầu. Nhóm fact-check, rewrite hoàn toàn, bổ sung case study Việt Nam và góc nhìn phản biện'
+                    },
+                    {
+                      icon: '🔍',
+                      title: 'Research & Synthesis',
+                      desc: 'AI tổng hợp thông tin từ nhiều nguồn. Nhóm cross-reference, verify, và tích hợp với kiến thức học thuật'
+                    }
+                  ].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      className="bg-stone-900/60 border border-amber-800/30 rounded-xl p-6"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      <div className="text-4xl mb-3">{item.icon}</div>
+                      <h3 className="text-xl font-bold text-amber-200 mb-2">{item.title}</h3>
+                      <p className="text-amber-100/80 text-sm leading-relaxed">{item.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Integrity Tab */}
+          {activeTab === 'integrity' && (
+            <motion.div
+              key="integrity"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              <motion.div 
+                className="bg-amber-900/20 backdrop-blur-sm border border-amber-700/30 rounded-2xl p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  📚 Cam kết liêm chính
+                </h2>
                 
                 <div className="space-y-6">
-                  {/* Performance Chart (Placeholder) */}
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-3">Hiệu suất theo thời gian</h3>
-                    <div className="h-64 bg-white/5 rounded-xl flex items-center justify-center">
-                      <div className="text-center text-purple-300">
-                        <div className="text-4xl mb-2">📊</div>
-                        <p>Biểu đồ phân tích sẽ được hiển thị ở đây</p>
-                        <p className="text-sm mt-2">Tích hợp Chart.js hoặc Recharts để hiển thị</p>
-                      </div>
-                    </div>
+                  <div className="bg-stone-900/60 border-l-4 border-amber-500 p-6 rounded-r-xl">
+                    <p className="text-amber-100 text-lg leading-relaxed mb-4">
+                      Chúng em cam kết rằng tất cả nội dung trong bài báo cáo này đều là sản phẩm của tư duy, phân tích và 
+                      sáng tạo của nhóm. AI chỉ được sử dụng như một công cụ hỗ trợ kỹ thuật và tổng hợp thông tin.
+                    </p>
+                    <p className="text-amber-200/80 italic">
+                      Mọi ý tưởng chính, góc nhìn phân tích, và kết luận đều được nhóm nghiên cứu, thảo luận và 
+                      quyết định độc lập dựa trên kiến thức học thuật và hiểu biết về thực tiễn Việt Nam.
+                    </p>
                   </div>
 
-                  {/* Additional Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-white/5 rounded-xl">
-                      <h4 className="text-purple-300 mb-2">Tỷ lệ hoàn thành</h4>
-                      <div className="text-2xl font-bold text-white">
-                        {stats.totalSessions > 0 
-                          ? Math.round((aiUsageData.filter(s => s.status === 'completed').length / stats.totalSessions) * 100)
-                          : 0}%
-                      </div>
-                    </div>
-                    <div className="p-4 bg-white/5 rounded-xl">
-                      <h4 className="text-purple-300 mb-2">Người chơi TB/Session</h4>
-                      <div className="text-2xl font-bold text-white">
-                        {stats.totalSessions > 0 
-                          ? Math.round(stats.totalPlayers / stats.totalSessions)
-                          : 0}
-                      </div>
-                    </div>
-                    <div className="p-4 bg-white/5 rounded-xl">
-                      <h4 className="text-purple-300 mb-2">Điểm trung bình cao nhất</h4>
-                      <div className="text-2xl font-bold text-white">
-                        {stats.topScore}
-                      </div>
-                    </div>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    {[
+                      { icon: '✓', title: 'Transparent', desc: 'Công khai mọi công cụ AI sử dụng' },
+                      { icon: '✓', title: 'Critical Thinking', desc: 'Không chấp nhận mù quáng output của AI' },
+                      { icon: '✓', title: 'Original Work', desc: 'Tư duy và sáng tạo của nhóm là chính' }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        className="bg-gradient-to-br from-green-900/40 to-emerald-900/40 border border-green-700/30 rounded-xl p-5 text-center"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className="text-3xl text-green-400 mb-2">{item.icon}</div>
+                        <h3 className="text-lg font-bold text-green-200 mb-1">{item.title}</h3>
+                        <p className="text-green-100/70 text-sm">{item.desc}</p>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
