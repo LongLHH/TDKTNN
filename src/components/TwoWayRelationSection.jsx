@@ -6,21 +6,6 @@ const TwoWayRelationSection = () => {
     <section id="analysis" className="relative min-h-screen py-20 px-6" style={{
       background: `linear-gradient(to bottom, #0f766e 0%, #059669 50%, #10b981 100%)`
     }}>
-      {/* Section Title */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          🔍 So sánh: Lý thuyết vs Thực tiễn
-        </h2>
-        <p className="text-lg text-emerald-100/80 max-w-3xl mx-auto">
-          Phân tích mối quan hệ giữa lý thuyết kinh tế học và thực tế Việt Nam
-        </p>
-      </motion.div>
-
       {/* Three Column Layout */}
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 items-stretch">
