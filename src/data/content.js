@@ -291,7 +291,7 @@ export const finalSectionData = {
 // Navigation
 export const navigationData = [
   { label: 'Trang chủ', path: '/', icon: '🏠' },
-  { label: 'Tổng quan', path: '#intro', icon: '📖' },
+  { label: 'Tổng quan', path: '#dragdrop', icon: '📖' },
   { label: 'Case Study', path: '#timeline', icon: '⏳' },
   { label: 'Phân tích', path: '#analysis', icon: '🔍' },
   { label: 'Giải pháp', path: '#solution', icon: '⚙️' }
