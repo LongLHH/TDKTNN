@@ -11,6 +11,7 @@ import ConnectingDotsSection from '../components/ConnectingDotsSection';
 import MindMapSection from '../components/MindMapSection';
 import SummarySection from '../components/SummarySection';
 import Footer from '../components/Footer';
+import TwoSideOfTDKTNN from '../components/TwoSideOfTDKTNN';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -74,6 +75,12 @@ const HomePage = () => {
       <div className="relative">
         <TwoWayRelationSection />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />
+      </div>
+
+      {/* 2 mặt của TDKTNN */}
+      <div className="relative w-full">
+        <TwoSideOfTDKTNN />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-purple-900 pointer-events-none z-10" />
       </div>
 
       <SolutionSection />
