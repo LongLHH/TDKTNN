@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import IntroSection from '../components/IntroSection';
 import TimelineSection from '../components/TimelineSection';
 import TwoWayRelationSection from '../components/TwoWayRelationSection';
+import SolutionSection from '../components/SolutionSection';
 import FlipCardSection from '../components/FlipCardSection';
 import ScratchCardsSection from '../components/ScratchCardsSection';
 import DragDropSection from '../components/DragDropSection';
@@ -73,14 +74,16 @@ const HomePage = () => {
 
       <div className="relative">
         <TwoWayRelationSection />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-emerald-700 pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />
       </div>
 
       {/* 2 mặt của TDKTNN */}
       <div className="relative w-full">
         <TwoSideOfTDKTNN />
-        {/* <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-emerald-700 pointer-events-none z-10" /> */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-purple-900 pointer-events-none z-10" />
       </div>
+
+      <SolutionSection />
 
       <SummarySection />
       <Footer />
