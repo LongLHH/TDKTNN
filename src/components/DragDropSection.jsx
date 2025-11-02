@@ -174,7 +174,7 @@ const DragDropSection = () => {
           >
             <div className="bg-orange-900/40 backdrop-blur-sm border-2 border-orange-500/50 rounded-2xl p-6 min-h-[300px] hover:border-orange-400/70 transition-all">
               <h3 className="font-bold text-2xl text-orange-300 mb-4 text-center">
-                �️ ĐỘC QUYỀN CHỈ ĐỊNH
+                ⚖️ ĐỘC QUYỀN CHỈ ĐỊNH
               </h3>
               <p className="text-sm text-orange-200/70 mb-4 text-center italic">
                 (State-Sanctioned Monopoly)
