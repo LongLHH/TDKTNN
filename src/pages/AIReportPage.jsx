@@ -12,50 +12,50 @@ const AIReportPage = () => {
   const aiTools = [
     {
       name: 'GitHub Copilot',
-      purpose: 'Cải thiện UI/UX và animation',
+      purpose: 'Cải thiện giao diện người dùng và hiệu ứng động',
       prompts: [
-        'Cải thiện component React hiệu quả với animations mượt mà, tối ưu responsive design và enhanced user experience cho ứng dụng',
-        'Tạo card layout cho timeline với animations và enhanced visual effects'
+        'Cải thiện component React hiệu quả với animations mượt mà, tối ưu responsive design và trải nghiệm người dùng tốt hơn cho ứng dụng.',
+        'Tạo bố cục thẻ cho dòng thời gian với hiệu ứng chuyển động và hiệu ứng hình ảnh nâng cao.'
       ],
       outputs: [
-        'Suggestions for advanced animations, improved responsive layouts, enhanced visual effects and performance optimizations',
-        'Timeline cards với animations và responsive design'
+        'Đề xuất các hiệu ứng nâng cao, bố cục responsive cải tiến, hiệu ứng hình ảnh và tối ưu hóa hiệu suất.',
+        'Các thẻ dòng thời gian với hiệu ứng động và thiết kế responsive.'
       ],
       edits: [
-        'Áp dụng selective các đề xuất giữ lọp, tùy chỉnh animations timing, điều chỉnh breakpoints và tối ưu performance',
-        'Customize layout, thêm gradient backgrounds, điều chỉnh spacing'
+        'Áp dụng chọn lọc các đề xuất phù hợp, tùy chỉnh thời gian hiệu ứng, điều chỉnh breakpoints và tối ưu hiệu suất.',
+        'Tùy chỉnh bố cục, thêm nền gradient, điều chỉnh khoảng cách.'
       ]
     },
     {
       name: 'Gemini Gem và NotebookLM',
       purpose: 'Tổng hợp, tư vấn nội dung và cấu trúc',
       prompts: [
-        'Phân tích và tổng hợp các khái niệm độc quyền từ Marx-Lenin, đưa ra cấu trúc tổng quát để phân tích hai logic và tạo nội dung phân tích với sinh viên Việt Nam',
-        'Tạo nội dung về độc quyền tự nhiên và độc quyền chỉ định từ các nguồn học thuật'
+        'Phân tích và tổng hợp các khái niệm độc quyền từ Marx-Lenin, đưa ra cấu trúc tổng quát để phân tích hai logic và tạo nội dung phân tích phù hợp với sinh viên Việt Nam.',
+        'Tạo nội dung về độc quyền tự nhiên và độc quyền chỉ định từ các nguồn học thuật.'
       ],
       outputs: [
-        'Structured content về các khái niệm độc quyền cơ bản, theories lịch sử, các khái niệm liên đới kèm hệ thống categories và được giải thích dễ hiểu và mind maps tổng hợp',
-        'Chi tiết nội dung độc quyền từ nhiều góc nhìn với structured output'
+        'Nội dung có cấu trúc về các khái niệm độc quyền cơ bản, lý thuyết lịch sử, các khái niệm liên quan kèm hệ thống phân loại được giải thích dễ hiểu và sơ đồ tư duy tổng hợp.',
+        'Nội dung chi tiết về độc quyền từ nhiều góc nhìn với kết quả đầu ra có cấu trúc.'
       ],
       edits: [
-        'Điều chỉnh nội dung theo học sinh, bổ sung ví dụ từ thị trường Việt Nam, tối ưu cấu trúc, thêm tin cho web interface',
-        'Chọn lọc nội dung phù hợp, đơn giản hóa thuật ngữ, thêm context Việt Nam'
+        'Điều chỉnh nội dung phù hợp với học sinh, bổ sung ví dụ từ thị trường Việt Nam, tối ưu cấu trúc, thêm thông tin cho giao diện web.',
+        'Chọn lọc nội dung phù hợp, đơn giản hóa thuật ngữ, thêm bối cảnh Việt Nam.'
       ]
     },
     {
       name: 'Gemini Nano Banana',
       purpose: 'Tạo hình ảnh minh họa',
       prompts: [
-        'Create vintage-style illustrations for Marx-Lenin economic theory timeline',
-        'Generate company logos for Vietnamese State Economic Groups (EVN, PVN, VNPT)'
+        'Tạo hình minh họa phong cách cổ điển cho dòng thời gian lý thuyết kinh tế Marx-Lenin.',
+        'Tạo logo công ty cho các Tập đoàn Kinh tế Nhà nước Việt Nam (EVN, PVN, VNPT).'
       ],
       outputs: [
-        'Các hình ảnh timeline và timeline theo style cổ điển',
-        'Company logos theo phong cách hiện đại minimalist'
+        'Các hình ảnh dòng thời gian theo phong cách cổ điển.',
+        'Logo công ty theo phong cách tối giản hiện đại.'
       ],
       edits: [
-        'Chỉnh màu sắc, kích thước cho phù hợp với theme web',
-        'Export sang SVG format, tối ưu kích thước file'
+        'Chỉnh màu sắc, kích thước cho phù hợp với chủ đề web.',
+        'Xuất sang định dạng SVG, tối ưu kích thước tệp.'
       ]
     }
   ];
@@ -76,10 +76,10 @@ const AIReportPage = () => {
             >
               ← Quay lại trang chủ
             </button>
-            <h1 className="text-5xl md:text-6xl font-bold text-amber-100 mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+            <h1 className="text-5xl md:text-6xl font-bold text-amber-100 mb-3" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
               Báo cáo Sử dụng AI
             </h1>
-            <p className="text-xl text-amber-300" style={{ fontFamily: 'Georgia, serif' }}>
+            <p className="text-xl text-amber-300" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
               Cam kết Liêm chính Học thuật
             </p>
           </div>
@@ -87,10 +87,10 @@ const AIReportPage = () => {
           {/* Tab Navigation */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {[
-              { id: 'tools', label: '🤖 Công cụ AI đã sử dụng', icon: '🤖' },
-              { id: 'evidence', label: '� Kiểm chứng nguồn', icon: '�' },
-              { id: 'application', label: '� Ứng dụng AI sáng tạo', icon: '�' },
-              { id: 'integrity', label: '� Cam kết liêm chính', icon: '�' }
+              { id: 'tools', label: 'Công cụ AI đã sử dụng', icon: '🤖' },
+              { id: 'evidence', label: 'Kiểm chứng nguồn', icon: '🔍' },
+              { id: 'application', label: 'Ứng dụng AI sáng tạo', icon: '🎯' },
+              { id: 'integrity', label: 'Cam kết liêm chính', icon: '📚' }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -101,9 +101,9 @@ const AIReportPage = () => {
                     : 'bg-amber-900/30 text-amber-200 hover:text-white hover:bg-amber-900/50 border border-amber-800/30'
                 }`}
               >
-                <span className="text-lg">{tab.icon}</span>
-                <span className="ml-2 hidden md:inline">{tab.label.replace(/^.+?\s/, '')}</span>
-                <span className="ml-2 md:hidden">{tab.label.split(' ')[1]}</span>
+                <span className="text-lg mr-2">{tab.icon}</span>
+                <span className="hidden md:inline">{tab.label}</span>
+                <span className="md:hidden">{tab.label.split(' ')[0]}</span>
               </button>
             ))}
           </div>
@@ -124,7 +124,7 @@ const AIReportPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-3xl font-bold text-amber-100 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                <h2 className="text-3xl font-bold text-amber-100 mb-6" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
                   🤖 Công cụ AI đã sử dụng
                 </h2>
                 
@@ -196,7 +196,7 @@ const AIReportPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
                   🔍 Kiểm chứng nguồn
                 </h2>
                 <p className="text-amber-200 mb-6">
@@ -261,7 +261,7 @@ const AIReportPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
                   🎯 Ứng dụng AI sáng tạo
                 </h2>
                 <p className="text-amber-200 mb-6">
@@ -272,23 +272,23 @@ const AIReportPage = () => {
                   {[
                     {
                       icon: '💡',
-                      title: 'Brainstorming & Cấu trúc',
-                      desc: 'AI giúp tổ chức ý tưởng ban đầu, đề xuất framework phân tích. Nhóm quyết định góc nhìn, logic trình bày và nội dung chính'
+                      title: 'Khơi nguồn ý tưởng & Cấu trúc',
+                      desc: 'AI giúp tổ chức ý tưởng ban đầu, đề xuất khung phân tích. Nhóm quyết định góc nhìn, logic trình bày và nội dung chính.'
                     },
                     {
                       icon: '🎨',
-                      title: 'Thiết kế UI/UX',
-                      desc: 'AI đề xuất layout và animations. Nhóm tùy chỉnh color scheme, typography, spacing để phù hợp với đề tài'
+                      title: 'Thiết kế giao diện',
+                      desc: 'AI đề xuất bố cục và hiệu ứng động. Nhóm tùy chỉnh bảng màu, kiểu chữ, khoảng cách để phù hợp với đề tài.'
                     },
                     {
                       icon: '📝',
                       title: 'Viết nội dung',
-                      desc: 'AI cung cấp draft ban đầu. Nhóm fact-check, rewrite hoàn toàn, bổ sung case study Việt Nam và góc nhìn phản biện'
+                      desc: 'AI cung cấp bản thảo ban đầu. Nhóm kiểm tra sự thật, viết lại hoàn toàn, bổ sung nghiên cứu tình huống Việt Nam và góc nhìn phản biện.'
                     },
                     {
                       icon: '🔍',
-                      title: 'Research & Synthesis',
-                      desc: 'AI tổng hợp thông tin từ nhiều nguồn. Nhóm cross-reference, verify, và tích hợp với kiến thức học thuật'
+                      title: 'Nghiên cứu & Tổng hợp',
+                      desc: 'AI tổng hợp thông tin từ nhiều nguồn. Nhóm đối chiếu, xác minh, và tích hợp với kiến thức học thuật.'
                     }
                   ].map((item, index) => (
                     <motion.div
@@ -323,7 +323,7 @@ const AIReportPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <h2 className="text-3xl font-bold text-amber-100 mb-4" style={{ fontFamily: "'Noto Serif', Georgia, serif" }}>
                   📚 Cam kết liêm chính
                 </h2>
                 
@@ -341,9 +341,9 @@ const AIReportPage = () => {
 
                   <div className="grid md:grid-cols-3 gap-4">
                     {[
-                      { icon: '✓', title: 'Transparent', desc: 'Công khai mọi công cụ AI sử dụng' },
-                      { icon: '✓', title: 'Critical Thinking', desc: 'Không chấp nhận mù quáng output của AI' },
-                      { icon: '✓', title: 'Original Work', desc: 'Tư duy và sáng tạo của nhóm là chính' }
+                      { icon: '✓', title: 'Minh bạch', desc: 'Công khai mọi công cụ AI sử dụng.' },
+                      { icon: '✓', title: 'Tư duy phản biện', desc: 'Không chấp nhận mù quáng kết quả từ AI.' },
+                      { icon: '✓', title: 'Công trình gốc', desc: 'Tư duy và sáng tạo của nhóm là chính.' }
                     ].map((item, index) => (
                       <motion.div
                         key={index}
